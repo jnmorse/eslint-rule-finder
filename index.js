@@ -50,9 +50,14 @@ class RuleFinder {
         }
 
         this.eslintRules.set(`${plugin}/${key}`, {
-          deprecated: value.meta.deprecated || false,
-          category,
-          ...value
+          ...value,
+          meta: {
+            ...value.meta,
+            docs: {
+              ...value.meta,
+              category
+            }
+          }
         });
       });
     });
@@ -64,6 +69,7 @@ class RuleFinder {
     const diff = new Map();
 
     eslintRules.forEach((value, key) => {
+      console.log(key, value.meta);
       if (!config.rules.hasOwnProperty(key)) {
         diff.set(key, {
           deprecated: value.meta.deprecated || false,
@@ -82,7 +88,6 @@ class RuleFinder {
   }
 
   getUnused(includeDeprecated = false) {
-    console.log(includeDeprecated);
     let rules = this.diffRules();
     rules = sortRules(rules);
 
