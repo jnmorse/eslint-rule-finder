@@ -1,17 +1,29 @@
-const { CLIEngine, Linter, ...eslint } = require('eslint');
+const { CLIEngine, Linter } = require('eslint');
 const path = require('path');
 const {
   filter,
   orderBy,
-  forEach,
+  forEach
 } = require('lodash');
+
+function sortRules(rules) {
+  const results = [];
+
+  rules.forEach((value, key) => {
+    results.push({
+      name: key,
+      ...value
+    });
+  });
+
+  return orderBy(results, ['category', 'deprecated', 'name']);
+}
 
 class RuleFinder {
   constructor(configFile) {
     const cf = path.join(process.cwd(), configFile);
 
     const cli = new CLIEngine({
-      cwd: process.cwd(),
       useEslintrc: false,
       configFile: cf
     });
@@ -20,7 +32,7 @@ class RuleFinder {
 
     this.config = cli.getConfigForFile();
     this.eslintRules = linter.getRules();
-    this.pluginRules = new Map();
+    this.getPluginRules();
   }
 
   getPluginRules() {
@@ -31,9 +43,15 @@ class RuleFinder {
       const pluginConfig = require(`eslint-plugin-${plugin}`);
 
       forEach(pluginConfig.rules, (value, key) => {
+        let category = plugin;
+
+        if (value.meta.docs && value.meta.docs.category) {
+          category += `/${value.meta.docs.category}`;
+        }
+
         this.eslintRules.set(`${plugin}/${key}`, {
           deprecated: value.meta.deprecated || false,
-          category: value.meta.docs && value.meta.docs.category ? value.meta.docs.category : plugin,
+          category,
           ...value
         });
       });
@@ -41,12 +59,11 @@ class RuleFinder {
   }
 
   diffRules() {
-    this.getPluginRules();
     const { eslintRules, config } = this;
 
     const diff = new Map();
 
-    for (const [key, value] of eslintRules) {
+    eslintRules.forEach((value, key) => {
       if (!config.rules.hasOwnProperty(key)) {
         diff.set(key, {
           deprecated: value.meta.deprecated || false,
@@ -54,13 +71,25 @@ class RuleFinder {
           ...value
         });
       }
-    }
+    });
 
     return diff;
   }
 
-  get unused(ignore = false) {
-    const rules = this.diffRules();
+  getCurrent() {
+    const { rules } = this.config;
+    return sortRules(rules);
+  }
+
+  getUnused(includeDeprecated = false) {
+    console.log(includeDeprecated);
+    let rules = this.diffRules();
+    rules = sortRules(rules);
+
+    if (!includeDeprecated) {
+      rules = filter(rules, rule => !rule.deprecated);
+    }
+
     return rules;
   }
 }
