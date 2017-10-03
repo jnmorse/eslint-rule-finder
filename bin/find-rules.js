@@ -2,8 +2,8 @@
 
 const program = require('commander');
 const fs = require('fs');
-const { version } = require('../../package.json');
-const RuleFinder = require('../lib/rule-finder');
+const { version } = require('../package.json');
+const RuleFinder = require('../index');
 
 // Set up options
 program.version(version);

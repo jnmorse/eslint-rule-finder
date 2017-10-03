@@ -8,7 +8,7 @@
     "test": "node src/bin/find-rules -u test.js"
   },
   "bin": {
-    "eslint-rule-finder": "src/bin/find-rules.js"
+    "eslint-rule-finder": "bin/find-rules.js"
   },
   "keywords": [
     "eslintconfig",

@@ -4,7 +4,6 @@ const {
   filter,
   orderBy,
   forEach,
-  difference
 } = require('lodash');
 
 class RuleFinder {
@@ -60,8 +59,9 @@ class RuleFinder {
     return diff;
   }
 
-  get unused() {
-    return this.diffRules();
+  get unused(ignore = false) {
+    const rules = this.diffRules();
+    return rules;
   }
 }
 
