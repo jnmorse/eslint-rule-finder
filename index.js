@@ -69,7 +69,6 @@ class RuleFinder {
     const diff = new Map();
 
     eslintRules.forEach((value, key) => {
-      console.log(key, value.meta);
       if (!config.rules.hasOwnProperty(key)) {
         diff.set(key, {
           deprecated: value.meta.deprecated || false,
