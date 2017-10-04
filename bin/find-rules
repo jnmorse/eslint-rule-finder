@@ -5,21 +5,21 @@ const fs = require('fs');
 const { version } = require('../package.json');
 const RuleFinder = require('../index');
 
-// Set up options
+// Set up Commander
 program.version(version);
 program.description('cli for getting eslint rules');
-program.option('-c, --current <file>', 'get current rules');
-program.option('-u, --unused <file>', 'get unused rules');
+program.option('-c, --current [file]', 'get current rules');
+program.option('-u, --unused [file]', 'get unused rules');
 program.option('-s, --save <file>', 'save output in markdown file');
 program.option('-i, --include', 'include deprecated rules');
 program.parse(process.argv);
 
+// check options passed
 if (program.current) {
-  const rf = new RuleFinder(program.current);
-  console.log(rf.getCurrent());
+  console.log('Not yet implemented');
 } else if (program.unused && program.save) {
-  const rf = new RuleFinder(program.unused);
-  const unused = rf.getUnused(program.include);
+  let unused = RuleFinder.findUnused(program.unused, program.include);
+  unused = RuleFinder.sortRules(unused);
 
   let text = '## Unused Rules';
 
@@ -27,7 +27,6 @@ if (program.current) {
 
   unused.forEach((rule) => {
     if (category !== rule.category) {
-      // eslint-disable-next-line prefer-destructuring
       category = rule.category;
 
       text += `\n\n${category}\n\n`;
@@ -36,20 +35,20 @@ if (program.current) {
     text += `- [ ] ${rule.name}\n`;
   });
 
-  console.log(text);
-
   fs.writeFileSync(program.save, text, { encoding: 'utf-8', flag: 'w' });
-
-  process.exit();
 } else if (program.unused) {
-  const rf = new RuleFinder(program.unused);
-  const unused = rf.getUnused(program.include);
+  const unused = RuleFinder.findUnused(program.unused, program.include);
+  const numOfUnused = Array.from(unused).length;
 
-  if (unused.length) {
-    console.error(unused.map(rule => rule.name));
-    console.error(`expected ${unused.length} rules to be defined\n\n`);
+  unused.forEach((value, key) => console.log(key));
+
+  if (numOfUnused) {
+    unused.forEach((value, key) => console.error(key));
+    console.error(`\n\n expected ${numOfUnused} rules to be defined \n\n`);
     process.exit(1);
   } else {
-    console.log('No unused rules! Good Job :)\n\n');
+    console.log('No unused rules\n\n');
   }
+} else {
+  program.help();
 }
