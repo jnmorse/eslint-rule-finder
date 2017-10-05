@@ -4,8 +4,7 @@
   "description": "Help Maintaining a Custom Eslint Config",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint .",
-    "test": "node src/bin/find-rules -u test.js"
+    "lint": "eslint ."
   },
   "bin": {
     "eslint-rule-finder": "bin/find-rules"
