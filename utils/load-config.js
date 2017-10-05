@@ -12,11 +12,11 @@ class LoadConfig {
     if (file !== true) {
       configFile = path.join(cwd, file);
     } else {
-      configFile = pkgConfig.main;
+      configFile = path.join(cwd, pkgConfig.main);
     }
 
     const cli = new CLIEngine({
-      useEslintRc: false,
+      useEslintrc: false,
       cwd,
       configFile
     });
@@ -24,8 +24,18 @@ class LoadConfig {
     // Not sure this is ment to work, but it does so leaving it for now.
     // Attempts to use Linter does not include plugin rules
     this.eslintRules = cli.linter.getRules();
+
     // eslint-disable-next-line import/no-dynamic-require, global-require
-    this.config = require(configFile);
+    const { rules } = cli.getConfigForFile();
+    // console.log(require(configFile));
+
+    this.current = new Map();
+
+    Object.keys(rules).forEach((rule) => {
+      const definition = this.eslintRules.get(rule);
+
+      this.current.set(rule, definition);
+    });
   }
 
   get rules() {
@@ -33,15 +43,7 @@ class LoadConfig {
   }
 
   get currentRules() {
-    const rules = new Map();
-
-    Object.keys(this.config.rules).forEach((rule) => {
-      const definition = this.eslintRules.get(rule);
-
-      rules.set(rule, definition);
-    });
-
-    return rules;
+    return this.current;
   }
 }
 

@@ -40,8 +40,6 @@ if (program.current) {
   const unused = RuleFinder.findUnused(program.unused, program.include);
   const numOfUnused = Array.from(unused).length;
 
-  unused.forEach((value, key) => console.log(key));
-
   if (numOfUnused) {
     unused.forEach((value, key) => console.error(key));
     console.error(`\n\n expected ${numOfUnused} rules to be defined \n\n`);
