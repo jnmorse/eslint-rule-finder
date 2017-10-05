@@ -17,7 +17,12 @@ program.parse(process.argv);
 const stdout = message => process.stdout.write(message);
 const stderr = message => process.stderr.write(message);
 
-const { current, include } = program;
+const {
+  current,
+  include,
+  unused,
+  save
+} = program;
 
 // check options passed
 if (current) {
@@ -34,15 +39,15 @@ if (current) {
   });
 
   stdout('\n');
-} else if (program.unused && program.save) {
-  let unused = ruleFinder.findUnused(program.unused, program.include);
-  unused = ruleFinder.sortRules(unused);
+} else if (unused && save) {
+  const unusedRules = ruleFinder.findUnused(program.unused, program.include);
+  const sortedRules = ruleFinder.sortRules(unusedRules);
 
   let text = '## Unused Rules';
 
   let category = '';
 
-  unused.forEach((rule) => {
+  sortedRules.forEach((rule) => {
     if (category !== rule.category) {
       category = rule.category;
 
@@ -53,7 +58,7 @@ if (current) {
   });
 
   fs.writeFileSync(program.save, text, { encoding: 'utf-8', flag: 'w' });
-} else if (program.unused) {
+} else if (unused) {
   const unusedRules = ruleFinder.findUnused(program.unused, include);
   const numOfUnused = Array.from(unusedRules).length;
 
