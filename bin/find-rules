@@ -3,7 +3,7 @@
 const program = require('commander');
 const fs = require('fs');
 const { version } = require('../package.json');
-const RuleFinder = require('../index');
+const ruleFinder = require('../index');
 
 // Set up Commander
 program.version(version);
@@ -21,7 +21,7 @@ const { current, include } = program;
 
 // check options passed
 if (current) {
-  const config = new RuleFinder.LoadConfig(current);
+  const config = new ruleFinder.LoadConfig(current);
 
   stdout('Current Defined Rules\n');
 
@@ -35,8 +35,8 @@ if (current) {
 
   stdout('\n');
 } else if (program.unused && program.save) {
-  let unused = RuleFinder.findUnused(program.unused, program.include);
-  unused = RuleFinder.sortRules(unused);
+  let unused = ruleFinder.findUnused(program.unused, program.include);
+  unused = ruleFinder.sortRules(unused);
 
   let text = '## Unused Rules';
 
@@ -54,7 +54,7 @@ if (current) {
 
   fs.writeFileSync(program.save, text, { encoding: 'utf-8', flag: 'w' });
 } else if (program.unused) {
-  const unused = RuleFinder.findUnused(program.unused, program.include);
+  const unused = ruleFinder.findUnused(program.unused, program.include);
   const numOfUnused = Array.from(unused).length;
 
   if (numOfUnused) {
