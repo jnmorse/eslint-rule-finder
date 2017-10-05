@@ -14,23 +14,26 @@ program.option('-s, --save <file>', 'save output in markdown file');
 program.option('-i, --include', 'include deprecated rules');
 program.parse(process.argv);
 
+const stdout = message => process.stdout.write(message);
+const stderr = message => process.stderr.write(message);
+
 const { current, include } = program;
 
 // check options passed
 if (current) {
   const config = new RuleFinder.LoadConfig(current);
 
-  console.log('Current Defined Rules\n');
+  stdout('Current Defined Rules\n');
 
   config.currentRules.forEach((value, key) => {
     if (value.meta.deprecated && include) {
-      console.log(`${key} (deprecated)`);
+      stdout(`${key} (deprecated)\n`);
     } else if (!value.meta.deprecated) {
-      console.log(`${key}`);
+      stdout(`${key}\n`);
     }
   });
 
-  console.log('\n');
+  stdout('\n');
 } else if (program.unused && program.save) {
   let unused = RuleFinder.findUnused(program.unused, program.include);
   unused = RuleFinder.sortRules(unused);
@@ -55,11 +58,11 @@ if (current) {
   const numOfUnused = Array.from(unused).length;
 
   if (numOfUnused) {
-    unused.forEach((value, key) => console.error(key));
-    console.error(`\n\n expected ${numOfUnused} rules to be defined \n\n`);
+    unused.forEach((value, key) => stderr(`${key}\n`));
+    stderr(`\n expected ${numOfUnused} rules to be defined \n`);
     process.exit(1);
   } else {
-    console.log('No unused rules\n\n');
+    stdout('No unused rules\n\n');
   }
 } else {
   program.help();
