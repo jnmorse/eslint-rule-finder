@@ -54,15 +54,26 @@ if (current) {
 
   fs.writeFileSync(program.save, text, { encoding: 'utf-8', flag: 'w' });
 } else if (program.unused) {
-  const unused = ruleFinder.findUnused(program.unused, program.include);
-  const numOfUnused = Array.from(unused).length;
+  const unusedRules = ruleFinder.findUnused(program.unused, include);
+  const numOfUnused = Array.from(unusedRules).length;
 
   if (numOfUnused) {
-    unused.forEach((value, key) => stderr(`${key}\n`));
-    stderr(`\n expected ${numOfUnused} rules to be defined \n`);
+    unusedRules.forEach((value, key) => {
+      const {
+        meta: {
+          docs: {
+            description
+          }
+        }
+      } = value;
+
+      stderr(`Not Defined: ${key}(${description})\n`);
+    });
+
+    stderr(`\n${numOfUnused} rules not defined \n\n`);
     process.exit(1);
   } else {
-    stdout('No unused rules\n\n');
+    stdout('\nNo unused rules\n\n');
   }
 } else {
   program.help();
