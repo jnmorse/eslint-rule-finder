@@ -14,9 +14,23 @@ program.option('-s, --save <file>', 'save output in markdown file');
 program.option('-i, --include', 'include deprecated rules');
 program.parse(process.argv);
 
+const { current, include } = program;
+
 // check options passed
-if (program.current) {
-  console.log('Not yet implemented');
+if (current) {
+  const config = new RuleFinder.LoadConfig(current);
+
+  console.log('Current Defined Rules\n');
+
+  config.currentRules.forEach((value, key) => {
+    if (value.meta.deprecated && include) {
+      console.log(`${key} (deprecated)`);
+    } else if (!value.meta.deprecated) {
+      console.log(`${key}`);
+    }
+  });
+
+  console.log('\n');
 } else if (program.unused && program.save) {
   let unused = RuleFinder.findUnused(program.unused, program.include);
   unused = RuleFinder.sortRules(unused);
