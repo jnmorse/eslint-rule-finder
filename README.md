@@ -7,6 +7,16 @@ Package to help eslint config maintainers keep there rules up to date.
 ```sh
 npm i -D eslint-rule-finder
 ```
+## Running tests
+
+Run tests once
+```sh
+npm test```
+
+Run tests after each change
+```sh
+npm run watch
+```
 
 ## Usage
 

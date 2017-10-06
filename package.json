@@ -4,7 +4,9 @@
   "description": "Help Maintaining a Custom Eslint Config",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "mocha",
+    "watch": "mocha --watch"
   },
   "bin": {
     "eslint-rule-finder": "bin/find-rules"
@@ -26,7 +28,9 @@
   },
   "devDependencies": {
     "babel-eslint": "^8.0.1",
+    "chai": "4.1.2",
     "eslint": "^4.8.0",
-    "eslint-config-jnmorse": "^1.1.5"
+    "eslint-config-jnmorse": "^1.1.5",
+    "mocha": "4.0.0"
   }
 }
