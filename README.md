@@ -5,7 +5,7 @@ Package to help eslint config maintainers keep there rules up to date.
 ## Install
 
 ```sh
-npm i -D jnmorse/eslint-rule-finder
+npm i -D eslint-rule-finder
 ```
 
 ## Usage
