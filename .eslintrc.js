@@ -1,3 +1,6 @@
 module.exports = {
-  extends: 'jnmorse'
+  extends: 'jnmorse',
+  env: {
+    mocha: true
+  }
 };
