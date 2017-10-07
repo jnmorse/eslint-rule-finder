@@ -11,7 +11,8 @@ npm i -D eslint-rule-finder
 
 Run tests once
 ```sh
-npm test```
+npm test
+```
 
 Run tests after each change
 ```sh
