@@ -2,7 +2,7 @@
 
 const program = require('commander');
 const fs = require('fs');
-const { version } = require('../package.json');
+const { version, name: projectName } = require('../package.json');
 const ruleFinder = require('../index');
 const getCategory = require('../utils/get-category');
 
@@ -11,7 +11,7 @@ program.version(version);
 program.description('cli for getting eslint rules');
 program.option('-c, --current [file]', 'get current rules');
 program.option('-u, --unused [file]', 'get unused rules');
-program.option('-s, --save <file>', 'save output in markdown file');
+program.option('-s, --save [file]', 'save output in markdown file');
 program.option('-i, --include', 'include deprecated rules');
 program.parse(process.argv);
 
@@ -25,13 +25,30 @@ const {
   save
 } = program;
 
-// check options passed
-if (current) {
-  const config = new ruleFinder.LoadConfig(current);
+const { currentRules } = new ruleFinder.LoadConfig(current);
 
+if (current && save) {
+  const sortedRules = ruleFinder.sortRules(currentRules);
+  let category = '';
+  let text = `# ${projectName}: Current Rules`;
+
+  sortedRules.forEach((value, key) => {
+    const newCategory = getCategory([key, value]);
+
+    if (category !== newCategory) {
+      category = newCategory;
+
+      text += `\n\n${category}\n\n`;
+    }
+
+    text += `- ${key}\n`;
+  });
+
+  fs.writeFileSync(save, text, { encoding: 'utf-8', flag: 'w' });
+} else if (current) {
   stdout('Current Defined Rules\n');
 
-  config.currentRules.forEach((value, key) => {
+  currentRules.forEach((value, key) => {
     if (value.meta.deprecated && include) {
       stdout(`${key} (deprecated)\n`);
     } else if (!value.meta.deprecated) {
