@@ -6,7 +6,9 @@
   "scripts": {
     "lint": "eslint .",
     "test": "mocha",
-    "watch": "mocha --watch"
+    "watch": "mocha --watch",
+    "preversion": "npm run --silent lint && npm run --silent test",
+    "postversion": "git push && git push --tags"
   },
   "bin": {
     "eslint-rule-finder": "bin/find-rules"
