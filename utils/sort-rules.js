@@ -1,31 +1,17 @@
 const { orderBy } = require('lodash');
+const getCategory = require('./get-category');
 
 function sortRules(rules) {
+  const results = new Map();
+
   const toSort = [...rules.entries()].map((rule) => {
     const [key, value] = rule;
-    let name = '';
-    let plugin = false;
 
     const deprecated = value.meta.deprecated || false;
-    let category = 'none';
-
-    [plugin, name] = key.split('/');
-
-    if (name) {
-      const upper = ([first, ...rest]) => `${first.toUpperCase()}${rest.join('')}`;
-      category = upper(plugin);
-      name = `${plugin}/${name}`;
-    } else {
-      name = plugin;
-    }
-
-    if (value.meta.docs && value.meta.docs.category && category === 'none') {
-      category = value.meta.docs.category;
-      name = plugin;
-    }
+    const category = getCategory(rule);
 
     return{
-      name,
+      name: key,
       deprecated,
       category,
       ...value
@@ -34,7 +20,13 @@ function sortRules(rules) {
 
   const orderedList = orderBy(toSort, ['deprecated', 'category', 'name'], 'asc');
 
-  return orderedList;
+  orderedList.forEach((rule) => {
+    const item = rules.get(rule.name);
+
+    results.set(rule.name, item);
+  });
+
+  return results;
 }
 
 module.exports = sortRules;
