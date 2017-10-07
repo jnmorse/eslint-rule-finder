@@ -11,10 +11,12 @@ describe('sortRules', () => {
       }
     });
     const sortedRules = sortRules(cli.linter.getRules());
-    expect(sortedRules.length).to.equal(254);
+    expect(sortedRules.size).to.equal(254);
+
+    const keys = [...sortedRules.keys()];
 
     // Check that first five rules are what they are supposed to be
-    expect(sortedRules.splice(0, 5).map(r => r.name)).to.deep.equal([
+    expect(keys.splice(0, 5)).to.deep.equal([
       'accessor-pairs',
       'array-callback-return',
       'block-scoped-var',

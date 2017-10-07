@@ -4,6 +4,7 @@ const program = require('commander');
 const fs = require('fs');
 const { version } = require('../package.json');
 const ruleFinder = require('../index');
+const getCategory = require('../utils/get-category');
 
 // Set up Commander
 program.version(version);
@@ -47,17 +48,19 @@ if (current) {
 
   let category = '';
 
-  sortedRules.forEach((rule) => {
-    if (category !== rule.category) {
-      category = rule.category;
+  sortedRules.forEach((value, key) => {
+    const newCategory = getCategory([key, value]);
+
+    if (category !== newCategory) {
+      category = newCategory;
 
       text += `\n\n${category}\n\n`;
     }
 
-    text += `- [ ] ${rule.name}\n`;
+    text += `- [ ] ${key}\n`;
   });
 
-  fs.writeFileSync(program.save, text, { encoding: 'utf-8', flag: 'w' });
+  fs.writeFileSync(save, text, { encoding: 'utf-8', flag: 'w' });
 } else if (unused) {
   const unusedRules = ruleFinder.findUnused(program.unused, include);
   const numOfUnused = Array.from(unusedRules).length;
