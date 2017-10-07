@@ -1,6 +1,6 @@
 {
   "name": "eslint-rule-finder",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Help Maintaining a Custom Eslint Config",
   "main": "index.js",
   "scripts": {
