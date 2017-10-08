@@ -25,9 +25,7 @@ class LoadConfig {
     // Attempts to use Linter does not include plugin rules
     this.eslintRules = cli.linter.getRules();
 
-    // eslint-disable-next-line import/no-dynamic-require, global-require
     const { rules } = cli.getConfigForFile();
-    // console.log(require(configFile));
 
     this.current = new Map();
 
