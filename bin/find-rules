@@ -67,13 +67,12 @@ if (current) {
 
   if (numOfUnused) {
     unusedRules.forEach((value, key) => {
-      const {
-        meta: {
-          docs: {
-            description
-          }
-        }
-      } = value;
+      let description = '';
+
+      // eslint-plugin-import does not define a docs
+      if (value.meta.docs && value.meta.docs.description) {
+        description = value.meta.docs.description;
+      }
 
       stderr(`Not Defined: ${key}(${description})\n`);
     });
