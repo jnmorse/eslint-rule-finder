@@ -1,22 +1,21 @@
-const LoadConfig = require('./load-config');
+const isDeprecated = rule => rule.meta && rule.meta.deprecated
 
-function findUnused(file, includeDeprecated) {
-  const loadedConfig = new LoadConfig(file);
-  const { rules, currentRules } = loadedConfig;
+function findUnused(loadedConfig, includeDeprecated) {
+  const { rules, currentRules } = loadedConfig
 
-  const unused = new Map();
+  const unused = new Map()
 
   rules.forEach((value, key) => {
     if (!currentRules.has(key)) {
-      if (!includeDeprecated && value.meta.deprecated) {
-        return;
+      if (!includeDeprecated && isDeprecated(value)) {
+        return
       }
 
-      unused.set(key, value);
+      unused.set(key, value)
     }
-  });
+  })
 
-  return unused;
+  return unused
 }
 
-module.exports = findUnused;
+module.exports = findUnused
