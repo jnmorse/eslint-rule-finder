@@ -14,6 +14,7 @@ test('LoadConfig should have the list of current rules', () => {
 
   expect(currentRules.get('curly')).not.toBeUndefined()
   expect(currentRules.get('semi')).not.toBeUndefined()
+  expect(currentRules.size).toBe(2)
 })
 
 test('LoadConfig should have all the rules', () => {

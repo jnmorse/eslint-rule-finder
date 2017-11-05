@@ -6,6 +6,8 @@ outline the solution as well.
 
 ## Pull Request
 
+**Working on your first Pull Request?** You can learn how from this *free* series [How to Contribute to an Open Source Project on GitHub](https://egghead.io/series/how-to-contribute-to-an-open-source-project-on-github)
+
 If you have already opened a issue, or find an issue you believe you can help with. Please feel free to open a pull request.
 I only ask that your pull request be made from your fork on a different branch the master. Please also have the branch named
 something like `fix/issue`, `feature/issue`. Also you commit message should follow a simular pattern. i.e.

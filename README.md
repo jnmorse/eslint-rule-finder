@@ -1,5 +1,8 @@
 # Eslint Rule Finder
 
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![Build Status](https://travis-ci.org/jnmorse/eslint-rule-finder.svg?branch=master)](https://travis-ci.org/jnmorse/eslint-rule-finder)
+
 Package to help eslint config maintainers keep there rules up to date.
 
 ## Install

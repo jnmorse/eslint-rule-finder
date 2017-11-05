@@ -6,7 +6,6 @@
   "scripts": {
     "lint": "eslint .",
     "test": "jest",
-    "watch": "mocha --watch",
     "preversion": "npm run --silent lint && npm run --silent test",
     "postversion": "git push && git push --tags"
   },
@@ -30,7 +29,7 @@
   },
   "devDependencies": {
     "eslint": "^4.10.0",
-    "eslint-config-jnmorse": "^1.2.0",
+    "eslint-config-jnmorse": "^1.2.1",
     "jest": "^21.2.1"
   },
   "directories": {

@@ -6,7 +6,7 @@ const isDeprecated = rule => rule.meta && rule.meta.deprecated
 function sortRules(rules) {
   const results = new Map()
 
-  const toSort = [...rules.entries()].map((rule) => {
+  const toSort = Array.from(rules).map((rule) => {
     const [key, value] = rule
 
     const deprecated = isDeprecated(value)
