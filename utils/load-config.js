@@ -2,6 +2,7 @@ const { CLIEngine } = require('eslint')
 const path = require('path')
 // eslint-disable-next-line import/no-dynamic-require
 const pack = require(`${path.join(process.cwd(), 'package.json')}`)
+const sortRules = require('./sort-rules')
 
 class LoadConfig {
   constructor(configFile) {
@@ -23,6 +24,7 @@ class LoadConfig {
     }
 
     this.rules = cli.linter.getRules()
+    this.rules = sortRules(this.rules)
 
     const { rules } = cli.getConfigForFile()
 

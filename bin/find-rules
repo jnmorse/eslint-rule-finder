@@ -4,7 +4,14 @@
 const program = require('commander')
 const fs = require('fs')
 const { version } = require('../package.json')
-const { LoadConfig, findUnused, sortRules } = require('../index')
+
+const {
+  LoadConfig,
+  findUnused,
+  sortRules,
+  saveCurrentRules
+} = require('../index')
+
 const getCategory = require('../utils/get-category')
 
 // Set up Commander
@@ -25,28 +32,32 @@ const {
 
 // check options passed
 if (current) {
-  const config = new LoadConfig(current !== true ? current : undefined)
+  const { currentRules, rules } = new LoadConfig(current !== true ? current : undefined)
 
-  console.log('Current Rules\n')
+  if (save) {
+    saveCurrentRules(save, currentRules)
+  } else {
+    console.log('Current Rules\n')
 
-  try {
-    config.currentRules.forEach((value, rule) => {
-      const definition = config.rules.get(rule)
+    try {
+      currentRules.forEach((value, rule) => {
+        const definition = rules.get(rule)
 
-      if (!definition) {
-        throw new Error(`${rule} Doesn't exist`)
-      } else if (definition.meta && definition.meta.deprecated) {
-        process.emitWarning(`${rule} is deprecated`)
-      }
+        if (!definition) {
+          throw new Error(`${rule} Doesn't exist`)
+        } else if (definition.meta && definition.meta.deprecated) {
+          process.emitWarning(`${rule} is deprecated`)
+        }
 
-      return console.log(rule)
-    })
-  } catch (error) {
-    console.error(`ERROR: ${error.message}`)
-    process.exit(10)
+        return console.log(rule)
+      })
+    } catch (error) {
+      console.error(`ERROR: ${error.message}`)
+      process.exit(10)
+    }
+
+    console.log('')
   }
-
-  console.log('')
 } else if (unused && save) {
   const config = new LoadConfig(unused !== true ? unused : undefined)
   const unusedRules = findUnused(config, program.include)
