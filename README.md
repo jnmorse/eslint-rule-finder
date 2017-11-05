@@ -7,17 +7,6 @@ Package to help eslint config maintainers keep there rules up to date.
 ```sh
 npm i -D eslint-rule-finder
 ```
-## Running tests
-
-Run tests once
-```sh
-npm test
-```
-
-Run tests after each change
-```sh
-npm run watch
-```
 
 ## Usage
 
@@ -31,4 +20,32 @@ Save Unused Rules to a markdown file as a list
 
 ```sh
 eslint-rule-finder --unused .eslint.rc --save UNUSED.md
+```
+
+## Use in Test Frameworks
+Below is some examples of how to use this with testing frameworks
+
+### Mocha & Chai
+
+```javascript
+const { LoadConfig, findUnused } = require('eslint-rule-finder')
+const { assert } = require('chai')
+
+let config
+
+describe('Rules', () => {
+  before(() => {
+    config = new LoadConfig()
+  })
+
+  it('should have 0 undefined rules', () => {
+    const unused = findUnused(config)
+
+    assert.isEmpty(unused)
+  })
+
+  it('should have 0 deprecated rules', () => {
+    assert.isEmpty(config.deprecated)
+  })
+})
 ```
