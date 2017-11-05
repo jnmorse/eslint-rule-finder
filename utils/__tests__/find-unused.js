@@ -12,10 +12,10 @@ beforeEach(() => {
 
 test('finds unused rules', () => {
   const unusedRules = findUnused(config)
-  expect(unusedRules.size).toMatchSnapshot()
+  expect(unusedRules.size).toBe(243)
 })
 
 test('find unused rules that are deprecated', () => {
   const unusedRules = findUnused(config, true)
-  expect(unusedRules.size).toMatchSnapshot()
+  expect(unusedRules.size).toBe(251)
 })
