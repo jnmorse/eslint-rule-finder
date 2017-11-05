@@ -1,87 +1,93 @@
 #!/usr/bin/env node
 
-const program = require('commander');
-const fs = require('fs');
-const { version } = require('../package.json');
-const ruleFinder = require('../index');
-const getCategory = require('../utils/get-category');
+/* eslint-disable no-console */
+const program = require('commander')
+const fs = require('fs')
+const { version } = require('../package.json')
+const { LoadConfig, findUnused, sortRules } = require('../index')
+const getCategory = require('../utils/get-category')
 
 // Set up Commander
-program.version(version);
-program.description('cli for getting eslint rules');
-program.option('-c, --current [file]', 'get current rules');
-program.option('-u, --unused [file]', 'get unused rules');
-program.option('-s, --save <file>', 'save output in markdown file');
-program.option('-i, --include', 'include deprecated rules');
-program.parse(process.argv);
-
-const stdout = message => process.stdout.write(message);
-const stderr = message => process.stderr.write(message);
+program.version(version)
+program.description('cli for getting eslint rules')
+program.option('-c, --current [file]', 'get current rules, (include deprecated is default)')
+program.option('-u, --unused [file]', 'get unused rules')
+program.option('-s, --save <file>', 'save output in markdown file')
+program.option('-i, --include', 'include deprecated rules')
+program.parse(process.argv)
 
 const {
   current,
   include,
   unused,
   save
-} = program;
+} = program
 
 // check options passed
 if (current) {
-  const config = new ruleFinder.LoadConfig(current);
+  const config = new LoadConfig(current !== true ? current : undefined)
 
-  stdout('Current Defined Rules\n');
+  console.log('Current Rules\n')
 
-  config.currentRules.forEach((value, key) => {
-    if (value.meta.deprecated && include) {
-      stdout(`${key} (deprecated)\n`);
-    } else if (!value.meta.deprecated) {
-      stdout(`${key}\n`);
-    }
-  });
+  try {
+    config.currentRules.forEach((value, rule) => {
+      const definition = config.rules.get(rule)
 
-  stdout('\n');
-} else if (unused && save) {
-  const unusedRules = ruleFinder.findUnused(program.unused, program.include);
-  const sortedRules = ruleFinder.sortRules(unusedRules);
-
-  let text = '## Unused Rules';
-
-  let category = '';
-
-  sortedRules.forEach((value, key) => {
-    const newCategory = getCategory([key, value]);
-
-    if (category !== newCategory) {
-      category = newCategory;
-
-      text += `\n\n${category}\n\n`;
-    }
-
-    text += `- [ ] ${key}\n`;
-  });
-
-  fs.writeFileSync(save, text, { encoding: 'utf-8', flag: 'w' });
-} else if (unused) {
-  const unusedRules = ruleFinder.findUnused(program.unused, include);
-  const numOfUnused = Array.from(unusedRules).length;
-
-  if (numOfUnused) {
-    unusedRules.forEach((value, key) => {
-      let description = '';
-
-      // eslint-plugin-import does not define a docs
-      if (value.meta.docs && value.meta.docs.description) {
-        description = value.meta.docs.description;
+      if (!definition) {
+        throw new Error(`${rule} Doesn't exist`)
+      } else if (definition.meta && definition.meta.deprecated) {
+        process.emitWarning(`${rule} is deprecated`)
       }
 
-      stderr(`Not Defined: ${key}(${description})\n`);
-    });
+      return console.log(rule)
+    })
+  } catch (error) {
+    console.error(`ERROR: ${error.message}`)
+    process.exit(10)
+  }
 
-    stderr(`\n${numOfUnused} rules not defined \n\n`);
-    process.exit(1);
-  } else {
-    stdout('\nNo unused rules\n\n');
+  console.log('')
+} else if (unused && save) {
+  const config = new LoadConfig(unused !== true ? unused : undefined)
+  const unusedRules = findUnused(config, program.include)
+  const sortedRules = sortRules(unusedRules)
+
+  let text = '## Unused Rules'
+
+  let category = ''
+
+  sortedRules.forEach((value, key) => {
+    const newCategory = getCategory([key, value])
+
+    if (category !== newCategory) {
+      category = newCategory
+
+      text += `\n\n${category}\n\n`
+    }
+
+    text += `- [ ] ${key}\n`
+  })
+
+  fs.writeFileSync(save, text, { encoding: 'utf-8', flag: 'w' })
+} else if (unused && !include) {
+  const config = new LoadConfig(unused !== true ? unused : undefined)
+  const unusedRules = findUnused(config, include)
+
+  if (unusedRules.size) {
+    unusedRules.forEach((value, key) => {
+      let description = ''
+
+      // eslint-plugin-import does not define a docs
+      if (value.meta && value.meta.docs && value.meta.docs.description) {
+        description = value.meta.docs.description
+      }
+
+      console.error(`Not Defined: ${key}(${description})`)
+    })
+
+    console.error(`\n${unusedRules.size} rules not defined\n`)
+    process.exit(1)
   }
 } else {
-  program.help();
+  program.help()
 }

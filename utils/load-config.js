@@ -1,48 +1,49 @@
-const { CLIEngine } = require('eslint');
-const path = require('path');
-
-const cwd = process.cwd();
+const { CLIEngine } = require('eslint')
+const path = require('path')
+// eslint-disable-next-line import/no-dynamic-require
+const pack = require(`${path.join(process.cwd(), 'package.json')}`)
 
 class LoadConfig {
-  constructor(file) {
-    let configFile = '';
-    // eslint-disable-next-line import/no-dynamic-require, global-require
-    const pkgConfig = require(path.join(cwd, 'package.json'));
+  constructor(configFile) {
+    let cwd = process.cwd()
+    let cli = null
 
-    if (file !== true) {
-      configFile = path.join(cwd, file);
+    if (configFile) {
+      cwd = path.dirname(configFile)
+      cli = new CLIEngine({
+        useEslintrc: false,
+        configFile,
+        cwd
+      })
     } else {
-      configFile = path.join(cwd, pkgConfig.main);
+      cli = new CLIEngine({
+        configFile: pack.main,
+        cwd
+      })
     }
 
-    const cli = new CLIEngine({
-      useEslintrc: false,
-      cwd,
-      configFile
-    });
+    this.rules = cli.linter.getRules()
 
-    // Not sure this is ment to work, but it does so leaving it for now.
-    // Attempts to use Linter does not include plugin rules
-    this.eslintRules = cli.linter.getRules();
+    const { rules } = cli.getConfigForFile()
 
-    const { rules } = cli.getConfigForFile();
-
-    this.current = new Map();
+    this.currentRules = new Map()
 
     Object.keys(rules).forEach((rule) => {
-      const definition = this.eslintRules.get(rule);
-
-      this.current.set(rule, definition);
-    });
+      this.currentRules.set(rule, rules[rule])
+    })
   }
 
-  get rules() {
-    return this.eslintRules;
-  }
+  get deprecated() {
+    const deprecatedRules = new Map()
 
-  get currentRules() {
-    return this.current;
+    this.currentRules.forEach((definition, rule) => {
+      if (rule.meta && rule.meta.deprecated) {
+        deprecatedRules.set(rule, definition)
+      }
+    })
+
+    return deprecatedRules
   }
 }
 
-module.exports = LoadConfig;
+module.exports = LoadConfig
