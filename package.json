@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "jest",
+    "test": "mocha",
     "preversion": "npm run --silent lint && npm run --silent test",
     "postversion": "git push && git push --tags"
   },
@@ -28,9 +28,10 @@
     "lodash": "^4.17.4"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
     "eslint": "^4.10.0",
     "eslint-config-jnmorse": "^1.2.1",
-    "jest": "^21.2.1"
+    "mocha": "^4.0.1"
   },
   "directories": {
     "test": "test"
