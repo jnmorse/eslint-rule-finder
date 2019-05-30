@@ -30,7 +30,7 @@ class LoadConfig {
 
     this.currentRules = new Map()
 
-    Object.keys(rules).forEach((rule) => {
+    Object.keys(rules).forEach(rule => {
       this.currentRules.set(rule, rules[rule])
     })
   }
@@ -38,8 +38,10 @@ class LoadConfig {
   get deprecated() {
     const deprecatedRules = new Map()
 
-    this.currentRules.forEach((definition, rule) => {
-      if (rule.meta && rule.meta.deprecated) {
+    this.currentRules.forEach((value, rule) => {
+      const definition = this.rules.get(rule)
+
+      if (definition && definition.meta && definition.meta.deprecated) {
         deprecatedRules.set(rule, definition)
       }
     })

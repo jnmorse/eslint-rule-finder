@@ -18,6 +18,6 @@ describe('loadConfig', () => {
 
   it('finds unused rules that are deprecated', () => {
     const unusedRules = findUnused(config, true)
-    assert.equal(unusedRules.size, 264)
+    assert.equal(unusedRules.size, 263)
   })
 })
