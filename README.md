@@ -43,13 +43,42 @@ describe('Rules', () => {
   })
 
   it('should have 0 undefined rules', () => {
-    const unused = findUnused(config)
+    const unusedRules = findUnused(config)
 
-    assert.isEmpty(unused)
+    assert.equal(unusedRules.size, 0)
   })
 
   it('should have 0 deprecated rules', () => {
-    assert.isEmpty(config.deprecated)
+    const { deprecated } = config
+
+    assert.equal(deprecated.size, 0)
   })
 })
+```
+
+### Jest Example
+
+```javascript
+const { LoadConfig, findUnused } = require('eslint-rule-finder')
+
+let config
+
+describe('Rules', () => {
+  beforeAll(() => {
+    config = new LoadConfig()
+  })
+
+  it('should have 0 undefined rules', () => {
+    const unused = findUnused(config)
+
+    expect(unused.size).toBe(0)
+  })
+
+  it('should have 0 deprecated rules', () => {
+    const { deprecated } = config
+
+    expect(deprecated).toEqual(new Map())
+  })
+})
+
 ```
