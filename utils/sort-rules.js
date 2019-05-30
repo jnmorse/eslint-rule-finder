@@ -6,13 +6,13 @@ const isDeprecated = rule => rule.meta && rule.meta.deprecated
 function sortRules(rules) {
   const results = new Map()
 
-  const toSort = Array.from(rules).map((rule) => {
+  const toSort = Array.from(rules).map(rule => {
     const [key, value] = rule
 
     const deprecated = isDeprecated(value)
     const category = getCategory(rule)
 
-    return{
+    return {
       name: key,
       deprecated,
       category,
@@ -22,7 +22,7 @@ function sortRules(rules) {
 
   const orderedList = orderBy(toSort, ['deprecated', 'category', 'name'], 'asc')
 
-  orderedList.forEach((rule) => {
+  orderedList.forEach(rule => {
     const item = rules.get(rule.name)
 
     results.set(rule.name, item)
