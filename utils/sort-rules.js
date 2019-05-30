@@ -1,4 +1,4 @@
-const { orderBy } = require('lodash')
+const orderBy = require('lodash/orderBy')
 const getCategory = require('./get-category')
 
 const isDeprecated = rule => rule.meta && rule.meta.deprecated

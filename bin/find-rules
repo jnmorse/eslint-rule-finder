@@ -17,22 +17,22 @@ const getCategory = require('../utils/get-category')
 // Set up Commander
 program.version(version)
 program.description('cli for getting eslint rules')
-program.option('-c, --current [file]', 'get current rules, (include deprecated is default)')
+program.option(
+  '-c, --current [file]',
+  'get current rules, (include deprecated is default)'
+)
 program.option('-u, --unused [file]', 'get unused rules')
 program.option('-s, --save <file>', 'save output in markdown file')
 program.option('-i, --include', 'include deprecated rules')
 program.parse(process.argv)
 
-const {
-  current,
-  include,
-  unused,
-  save
-} = program
+const { current, include, unused, save } = program
 
 // check options passed
 if (current) {
-  const { currentRules, rules } = new LoadConfig(current !== true ? current : undefined)
+  const { currentRules, deprecated } = new LoadConfig(
+    current !== true ? current : undefined
+  )
 
   if (save) {
     saveCurrentRules(save, currentRules)
@@ -40,19 +40,20 @@ if (current) {
     console.log('Current Rules\n')
 
     try {
-      currentRules.forEach((value, rule) => {
-        const definition = rules.get(rule)
-
-        if (!definition) {
-          throw new Error(`${rule} Doesn't exist`)
-        } else if (definition.meta && definition.meta.deprecated) {
-          process.emitWarning(`${rule} is deprecated`)
+      currentRules.forEach((describe, rule) => {
+        if (!deprecated.has(rule)) {
+          console.log(rule)
         }
-
-        return console.log(rule)
       })
+
+      // add blank line
+      console.log('')
+
+      deprecated.forEach((describe, rule) =>
+        console.warn(`Warning: ${rule} has been deprecated`)
+      )
     } catch (error) {
-      console.error(`ERROR: ${error.message}`)
+      console.error(`Error: ${error.message}`)
       process.exit(10)
     }
 
@@ -98,6 +99,8 @@ if (current) {
 
     console.error(`\n${unusedRules.size} rules not defined\n`)
     process.exit(1)
+  } else {
+    console.info('All rules are defined. Good Job!')
   }
 } else {
   program.help()

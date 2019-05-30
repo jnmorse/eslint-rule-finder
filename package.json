@@ -2,25 +2,33 @@
   "name": "eslint-rule-finder",
   "version": "1.2.1",
   "description": "Help Maintaining a Custom Eslint Config",
+  "keywords": [
+    "cli",
+    "eslint",
+    "eslintconfig"
+  ],
+  "homepage": "https://github.com/jnmorse/eslint-rule-finder#readme",
+  "bugs": {
+    "url": "https://github.com/jnmorse/eslint-rule-finder/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jnmorse/eslint-rule-finder.git"
+  },
+  "license": "MIT",
+  "author": "Joseph Morse <tamed.lionheart@gmail.com>",
   "main": "index.js",
+  "bin": {
+    "eslint-rule-finder": "bin/find-rules"
+  },
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
     "lint": "eslint .",
     "test": "mocha",
     "preversion": "npm run --silent lint && npm run --silent test",
     "postversion": "git push && git push --tags"
-  },
-  "bin": {
-    "eslint-rule-finder": "bin/find-rules"
-  },
-  "keywords": [
-    "eslintconfig",
-    "eslint",
-    "cli"
-  ],
-  "author": "Joseph Morse <tamed.lionheart@gmail.com>",
-  "license": "MIT",
-  "peerDependencies": {
-    "eslint": ">= 4"
   },
   "dependencies": {
     "babel-eslint": "^10.0.1",
@@ -33,15 +41,7 @@
     "eslint-config-jnmorse": "^2.3.1",
     "mocha": "^6.1.4"
   },
-  "directories": {
-    "test": "test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jnmorse/eslint-rule-finder.git"
-  },
-  "bugs": {
-    "url": "https://github.com/jnmorse/eslint-rule-finder/issues"
-  },
-  "homepage": "https://github.com/jnmorse/eslint-rule-finder#readme"
+  "peerDependencies": {
+    "eslint": ">= 4"
+  }
 }
