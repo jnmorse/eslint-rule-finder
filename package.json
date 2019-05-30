@@ -26,9 +26,9 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "test": "mocha",
-    "preversion": "npm run --silent lint && npm run --silent test",
-    "postversion": "git push && git push --tags"
+    "prerelease": "npm run --silent lint && npm run --silent test",
+    "release": "standard-version --sign",
+    "test": "mocha"
   },
   "dependencies": {
     "babel-eslint": "^10.0.1",
@@ -39,7 +39,8 @@
     "chai": "^4.2.0",
     "eslint": "^5.16.0",
     "eslint-config-jnmorse": "^2.3.1",
-    "mocha": "^6.1.4"
+    "mocha": "^6.1.4",
+    "standard-version": "^6.0.1"
   },
   "peerDependencies": {
     "eslint": ">= 4"
