@@ -1,5 +1,6 @@
 # Eslint Rule Finder
 
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![Build Status](https://travis-ci.org/jnmorse/eslint-rule-finder.svg?branch=master)](https://travis-ci.org/jnmorse/eslint-rule-finder)
 

@@ -25,7 +25,14 @@ describe('Load Config', () => {
   it('should have only currentRules', () => {
     const { currentRules } = config
 
-    assert.hasAllKeys(currentRules, ['curly', 'semi'])
-    assert.equal(currentRules.size, 2)
+    assert.hasAllKeys(currentRules, ['curly', 'semi', 'valid-jsdoc'])
+    assert.equal(currentRules.size, 3)
+  })
+
+  it('should return deprecated rules', () => {
+    const { deprecated } = config
+
+    assert.equal(deprecated.size, 1)
+    assert.equal(deprecated.has('valid-jsdoc'), true)
   })
 })

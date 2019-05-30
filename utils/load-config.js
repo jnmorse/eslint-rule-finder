@@ -23,24 +23,34 @@ class LoadConfig {
       })
     }
 
-    this.rules = cli.linter.getRules()
-    this.rules = sortRules(this.rules)
+    this.rules = sortRules(cli.linter.getRules())
 
     const { rules } = cli.getConfigForFile()
 
     this.currentRules = new Map()
 
-    Object.keys(rules).forEach((rule) => {
-      this.currentRules.set(rule, rules[rule])
+    Object.keys(rules).forEach(rule => {
+      const definition = this.rules.get(rule)
+
+      if (definition) {
+        this.currentRules.set(rule, {
+          config: rules[rule],
+          definition: this.rules.get(rule) || null
+        })
+      } else {
+        // eslint-disable-next-line no-console
+        throw new Error(`definition for ${rule} does not exist`)
+      }
     })
   }
 
   get deprecated() {
     const deprecatedRules = new Map()
 
-    this.currentRules.forEach((definition, rule) => {
-      if (rule.meta && rule.meta.deprecated) {
-        deprecatedRules.set(rule, definition)
+    this.currentRules.forEach((value, rule) => {
+      const { definition } = value
+      if (definition && definition.meta && definition.meta.deprecated) {
+        deprecatedRules.set(rule, value)
       }
     })
 

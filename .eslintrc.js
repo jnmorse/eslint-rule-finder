@@ -5,5 +5,8 @@ module.exports = {
   },
   parserOptions: {
     ecmaVersion: 9
+  },
+  rules: {
+    'import/no-unused-modules': 'off'
   }
 };
