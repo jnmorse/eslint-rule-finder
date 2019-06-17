@@ -4,6 +4,8 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![Build Status](https://travis-ci.org/jnmorse/eslint-rule-finder.svg?branch=master)](https://travis-ci.org/jnmorse/eslint-rule-finder)
 
+<a href='https://ko-fi.com/Q5Q7XEIM' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi2.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+
 Package to help eslint config maintainers keep there rules up to date.
 
 ## Install
@@ -27,6 +29,7 @@ eslint-rule-finder --unused .eslint.rc --save UNUSED.md
 ```
 
 ## Use in Test Frameworks
+
 Below is some examples of how to use this with testing frameworks
 
 ### Mocha & Chai
