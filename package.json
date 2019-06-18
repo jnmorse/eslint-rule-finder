@@ -31,11 +31,11 @@
     "test": "mocha"
   },
   "dependencies": {
-    "babel-eslint": "^10.0.1",
     "commander": "^2.20.0",
     "lodash": "^4.17.11"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.2",
     "chai": "^4.2.0",
     "eslint": "^5.16.0",
     "eslint-config-jnmorse": "^2.3.1",
