@@ -25,7 +25,7 @@ class LoadConfig {
 
     this.rules = sortRules(cli.getRules())
 
-    const { rules } = cli.getConfigForFile(configFile)
+    const { rules } = cli.getConfigForFile(configFile || pack.main)
 
     this.currentRules = new Map()
 
