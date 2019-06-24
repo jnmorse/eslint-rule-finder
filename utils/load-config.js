@@ -1,4 +1,6 @@
-const { CLIEngine } = require('eslint')
+const eslint = require('eslint')
+
+const { CLIEngine } = eslint
 const path = require('path')
 // eslint-disable-next-line import/no-dynamic-require
 const pack = require(`${path.join(process.cwd(), 'package.json')}`)
@@ -22,6 +24,8 @@ class LoadConfig {
         cwd
       })
     }
+
+    cli.executeOnText('') // need to actually load everything
 
     this.rules = sortRules(cli.getRules())
 

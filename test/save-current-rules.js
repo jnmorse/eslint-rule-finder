@@ -4,7 +4,7 @@ const fs = require('fs')
 
 const { LoadConfig, saveCurrentRules } = require('../index')
 
-const configFile = path.resolve(__dirname, './fixtures/.eslintrc.js')
+const configFile = path.resolve(__dirname, './fixtures/withoutPlugins.js')
 
 describe('save current rules', () => {
   const { currentRules } = new LoadConfig(configFile)

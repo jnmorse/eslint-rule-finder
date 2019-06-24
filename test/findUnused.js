@@ -2,7 +2,7 @@ const path = require('path')
 const { assert } = require('chai')
 const { LoadConfig, findUnused } = require('../index')
 
-const configFile = path.resolve(__dirname, './fixtures/.eslintrc.js')
+const configFile = path.resolve(__dirname, './fixtures/withoutPlugins.js')
 
 describe('loadConfig', () => {
   let config
