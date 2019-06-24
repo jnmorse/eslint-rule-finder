@@ -38,7 +38,7 @@
     "babel-eslint": "^10.0.2",
     "chai": "^4.2.0",
     "eslint": "^6.0.0",
-    "eslint-config-jnmorse": "^2.3.1",
+    "eslint-config-jnmorse": "^2.4.4",
     "mocha": "^6.1.4",
     "standard-version": "^6.0.1"
   },
