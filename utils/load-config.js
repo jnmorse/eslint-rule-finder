@@ -23,9 +23,9 @@ class LoadConfig {
       })
     }
 
-    this.rules = sortRules(cli.linter.getRules())
+    this.rules = sortRules(cli.getRules())
 
-    const { rules } = cli.getConfigForFile()
+    const { rules } = cli.getConfigForFile(configFile)
 
     this.currentRules = new Map()
 
