@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.1](https://github.com/jnmorse/eslint-rule-finder/compare/v1.3.0...v1.3.1) (2019-06-24)
+
+
+### Bug Fixes
+
+* **load-config:** account for no file provided ([1dedb9a](https://github.com/jnmorse/eslint-rule-finder/commit/1dedb9a))
+
+
+
 ## [1.3.0](https://github.com/jnmorse/eslint-rule-finder/compare/v1.2.2...v1.3.0) (2019-06-24)
 
 
