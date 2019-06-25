@@ -8,4 +8,4 @@ module.exports = {
   rules: {
     'react/display-name': 'error'
   }
-}
+};

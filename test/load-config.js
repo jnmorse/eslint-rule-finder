@@ -1,65 +1,65 @@
-const { resolve } = require('path')
-const { assert } = require('chai')
+const { resolve } = require('path');
+const { assert } = require('chai');
 
-const { LoadConfig } = require('../index')
+const { LoadConfig } = require('../index');
 
 describe('Load Config', () => {
-  let config
+  let config;
 
   before('invoke with new keyword', () => {
-    config = new LoadConfig(resolve(__dirname, './fixtures/withoutPlugins.js'))
-  })
+    config = new LoadConfig(resolve(__dirname, './fixtures/withoutPlugins.js'));
+  });
 
   it('should be defined', () => {
-    assert.isDefined(config)
-  })
+    assert.isDefined(config);
+  });
 
   it('should have all the rules', () => {
-    const { rules } = config
+    const { rules } = config;
 
-    assert.equal(rules.size, 266)
-  })
+    assert.equal(rules.size, 266);
+  });
 
   it('should have only currentRules', () => {
-    const { currentRules } = config
+    const { currentRules } = config;
 
-    assert.hasAllKeys(currentRules, ['curly', 'semi', 'valid-jsdoc'])
-    assert.equal(currentRules.size, 3)
-  })
+    assert.hasAllKeys(currentRules, ['curly', 'semi', 'valid-jsdoc']);
+    assert.equal(currentRules.size, 3);
+  });
 
   it('should return deprecated rules', () => {
-    const { deprecated } = config
+    const { deprecated } = config;
 
-    assert.equal(deprecated.size, 1)
-    assert.equal(deprecated.has('valid-jsdoc'), true)
-  })
-})
+    assert.equal(deprecated.size, 1);
+    assert.equal(deprecated.has('valid-jsdoc'), true);
+  });
+});
 
 describe('load config with plugins', () => {
-  let config = null
+  let config = null;
 
   before(() => {
-    config = new LoadConfig(resolve(__dirname, './fixtures/withPlugin.js'))
-  })
+    config = new LoadConfig(resolve(__dirname, './fixtures/withPlugin.js'));
+  });
 
   it('should contain more then the base rules', () => {
-    const { rules } = config
-    const expectedSize = 266
+    const { rules } = config;
+    const expectedSize = 266;
 
     assert.isAbove(
       rules.size,
       expectedSize,
       `There should be more then ${expectedSize} rules`
-    )
-  })
+    );
+  });
 
   it('should have react/display-name set', () => {
-    const { currentRules } = config
+    const { currentRules } = config;
     assert.hasAllKeys(
       currentRules,
       ['react/display-name'],
       'should only have react/display-name'
-    )
-    assert.doesNotHaveAllKeys(currentRules, ['react/button-has-type'])
-  })
-})
+    );
+    assert.doesNotHaveAllKeys(currentRules, ['react/button-has-type']);
+  });
+});

@@ -1,23 +1,23 @@
-const { assert } = require('chai')
-const path = require('path')
-const fs = require('fs')
+const { assert } = require('chai');
+const path = require('path');
+const fs = require('fs');
 
-const { LoadConfig, saveCurrentRules } = require('../index')
+const { LoadConfig, saveCurrentRules } = require('../index');
 
-const configFile = path.resolve(__dirname, './fixtures/withoutPlugins.js')
+const configFile = path.resolve(__dirname, './fixtures/withoutPlugins.js');
 
 describe('save current rules', () => {
-  const { currentRules } = new LoadConfig(configFile)
+  const { currentRules } = new LoadConfig(configFile);
 
   after(() => {
-    fs.unlinkSync('test.md')
-  })
+    fs.unlinkSync('test.md');
+  });
 
   it('should save rules', () => {
-    saveCurrentRules('test.md', currentRules)
-    const stats = fs.statSync('test.md')
+    saveCurrentRules('test.md', currentRules);
+    const stats = fs.statSync('test.md');
 
-    assert.isTrue(fs.existsSync('test.md'))
-    assert.isAbove(stats.size, 0)
-  })
-})
+    assert.isTrue(fs.existsSync('test.md'));
+    assert.isAbove(stats.size, 0);
+  });
+});

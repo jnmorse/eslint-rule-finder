@@ -4,4 +4,4 @@ module.exports = {
     curly: 'error',
     'valid-jsdoc': 'off'
   }
-}
+};
