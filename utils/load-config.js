@@ -25,8 +25,6 @@ class LoadConfig {
       })
     }
 
-    cli.executeOnText('') // need to actually load everything
-
     this.rules = sortRules(cli.getRules())
 
     const { rules } = cli.getConfigForFile(configFile || pack.main)
