@@ -18,7 +18,6 @@ class LoadConfig {
     let cli = null;
 
     if (configFile) {
-      cwd = path.dirname(configFile);
       cli = new CLIEngine({
         useEslintrc: false,
         configFile,
@@ -26,6 +25,7 @@ class LoadConfig {
       });
     } else {
       cli = new CLIEngine({
+        useEslintrc: false,
         configFile: pack.main,
         cwd
       });
