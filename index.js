@@ -1,7 +1,7 @@
-const LoadConfig = require('./utils/load-config');
-const findUnused = require('./utils/find-unused');
-const sortRules = require('./utils/sort-rules');
-const saveCurrentRules = require('./utils/save-current-rules');
+const LoadConfig = require('./dist/load-config').default;
+const findUnused = require('./dist/find-unused').default;
+const sortRules = require('./dist/sort-rules').default;
+const saveCurrentRules = require('./dist/save-current-rules').default;
 
 module.exports = {
   LoadConfig,
