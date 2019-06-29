@@ -28,7 +28,6 @@
     "lint": "eslint .",
     "prebuild": "rm -r dist",
     "build": "tsc",
-    "postbuild": "chmode +x dist/bin/*.js",
     "prerelease": "npm run --silent build && npm run --silent test",
     "release": "standard-version --sign",
     "test": "mocha"
