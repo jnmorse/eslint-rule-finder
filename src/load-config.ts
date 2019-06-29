@@ -68,4 +68,4 @@ class LoadConfig {
   }
 }
 
-module.exports = LoadConfig;
+export default LoadConfig;
