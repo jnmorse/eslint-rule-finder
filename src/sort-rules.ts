@@ -1,12 +1,15 @@
-const orderBy = require('lodash/orderBy');
+import { Rule } from 'eslint';
+import orderBy from 'lodash/orderBy';
+
 const getCategory = require('./get-category');
 
-const isDeprecated = rule => rule.meta && rule.meta.deprecated;
+const isDeprecated = (rule: Rule.RuleModule): boolean =>
+  rule.meta && rule.meta.deprecated ? true : false;
 
-function sortRules(rules) {
+function sortRules(rules: Map<string, Rule.RuleModule>) {
   const results = new Map();
 
-  const toSort = Array.from(rules).map(rule => {
+  const toSort = Array.from(rules).map((rule: [string, Rule.RuleModule]) => {
     const [key, value] = rule;
 
     const deprecated = isDeprecated(value);
