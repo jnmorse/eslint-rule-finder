@@ -1,13 +1,19 @@
-const eslint = require('eslint');
-
-const { CLIEngine } = eslint;
+import { CLIEngine, Rule, Linter } from 'eslint';
 const path = require('path');
-// eslint-disable-next-line import/no-dynamic-require
+
 const pack = require(`${path.join(process.cwd(), 'package.json')}`);
 const sortRules = require('./sort-rules');
 
+interface CurrentRuleDefintion {
+  config: Linter.RuleLevel | Linter.RuleLevelAndOptions;
+  definition: Rule.RuleModule;
+}
+
 class LoadConfig {
-  constructor(configFile) {
+  public rules: Map<string, Rule.RuleModule> = new Map();
+  public currentRules: Map<string, CurrentRuleDefintion> = new Map();
+
+  constructor(configFile: string) {
     let cwd = process.cwd();
     let cli = null;
 
@@ -31,19 +37,21 @@ class LoadConfig {
 
     this.currentRules = new Map();
 
-    Object.keys(rules).forEach(rule => {
-      const definition = this.rules.get(rule);
+    if (rules) {
+      Object.keys(rules).forEach(rule => {
+        const definition = this.rules.get(rule);
 
-      if (definition) {
-        this.currentRules.set(rule, {
-          config: rules[rule],
-          definition: this.rules.get(rule) || null
-        });
-      } else {
-        // eslint-disable-next-line no-console
-        throw new Error(`definition for ${rule} does not exist`);
-      }
-    });
+        if (definition) {
+          this.currentRules.set(rule, {
+            config: rules[rule],
+            definition
+          });
+        } else {
+          // eslint-disable-next-line no-console
+          throw new Error(`definition for ${rule} does not exist`);
+        }
+      });
+    }
   }
 
   get deprecated() {
