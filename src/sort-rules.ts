@@ -1,7 +1,7 @@
 import { Rule } from 'eslint';
 import orderBy from 'lodash/orderBy';
 
-const getCategory = require('./get-category');
+import getCategory from './get-category';
 
 const isDeprecated = (rule: Rule.RuleModule): boolean =>
   rule.meta && rule.meta.deprecated ? true : false;
