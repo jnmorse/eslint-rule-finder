@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.3](https://github.com/jnmorse/eslint-rule-finder/compare/v1.3.2...v1.3.3) (2019-06-29)
+
+
+### Bug Fixes
+
+* **deps-dev:** updated to eslint 6.0.1 ([2964b07](https://github.com/jnmorse/eslint-rule-finder/commit/2964b07))
+* **LoadConfig:** fixed issue with loading config files ([46289f0](https://github.com/jnmorse/eslint-rule-finder/commit/46289f0))
+
+
+
 ### [1.3.2](https://github.com/jnmorse/eslint-rule-finder/compare/v1.3.1...v1.3.2) (2019-06-24)
 
 
