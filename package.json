@@ -30,6 +30,7 @@
     "build": "tsc",
     "prerelease": "npm run --silent build && npm run --silent test",
     "release": "standard-version --sign",
+    "pretest": "npm run --silent build",
     "test": "mocha"
   },
   "dependencies": {
