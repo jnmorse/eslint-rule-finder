@@ -9,10 +9,9 @@ const {
   LoadConfig,
   findUnused,
   sortRules,
-  saveCurrentRules
-} = require('../index');
-
-const getCategory = require('../dist/get-category').default;
+  saveCurrentRules,
+  getCategory
+} = require('../dist/index');
 
 // Set up Commander
 program.version(version);

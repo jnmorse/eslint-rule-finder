@@ -1,7 +1,7 @@
 const { resolve } = require('path');
 const { assert } = require('chai');
 
-const { LoadConfig } = require('../index');
+const { LoadConfig } = require('../dist/index');
 
 describe('Load Config', () => {
   let config;

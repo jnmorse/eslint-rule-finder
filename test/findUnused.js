@@ -1,6 +1,6 @@
 const path = require('path');
 const { assert } = require('chai');
-const { LoadConfig, findUnused } = require('../index');
+const { LoadConfig, findUnused } = require('../dist/index');
 
 const configFile = path.resolve(__dirname, './fixtures/withoutPlugins.js');
 

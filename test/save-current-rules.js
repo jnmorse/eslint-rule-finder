@@ -2,7 +2,7 @@ const { assert } = require('chai');
 const path = require('path');
 const fs = require('fs');
 
-const { LoadConfig, saveCurrentRules } = require('../index');
+const { LoadConfig, saveCurrentRules } = require('../dist/index');
 
 const configFile = path.resolve(__dirname, './fixtures/withoutPlugins.js');
 
