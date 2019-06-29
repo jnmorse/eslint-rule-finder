@@ -1,10 +1,10 @@
 import { CLIEngine, Rule, Linter } from 'eslint';
-const path = require('path');
+import path from 'path';
 
 const pack = require(`${path.join(process.cwd(), 'package.json')}`);
-const sortRules = require('./sort-rules');
+import sortRules from './sort-rules';
 
-interface CurrentRuleDefintion {
+export interface CurrentRuleDefintion {
   config: Linter.RuleLevel | Linter.RuleLevelAndOptions;
   definition: Rule.RuleModule;
 }
@@ -68,4 +68,4 @@ class LoadConfig {
   }
 }
 
-module.exports = LoadConfig;
+export default LoadConfig;

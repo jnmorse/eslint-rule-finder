@@ -38,4 +38,4 @@ function sortRules(rules: Map<string, Rule.RuleModule>) {
   return results;
 }
 
-module.exports = sortRules;
+export default sortRules;
