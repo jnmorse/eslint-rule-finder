@@ -54,8 +54,8 @@ class LoadConfig {
     }
   }
 
-  get deprecated() {
-    const deprecatedRules = new Map();
+  get deprecated(): Map<string, CurrentRuleDefintion> {
+    const deprecatedRules: Map<string, CurrentRuleDefintion> = new Map();
 
     this.currentRules.forEach((value, rule) => {
       const { definition } = value;
