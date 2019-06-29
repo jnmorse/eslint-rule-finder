@@ -26,7 +26,10 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "prerelease": "npm run --silent lint && npm run --silent test",
+    "prebuild": "rm -r dist",
+    "build": "tsc",
+    "postbuild": "chmode +x dist/bin/*.js",
+    "prerelease": "npm run --silent build && npm run --silent test",
     "release": "standard-version --sign",
     "test": "mocha"
   },
@@ -35,6 +38,8 @@
     "lodash": "^4.17.11"
   },
   "devDependencies": {
+    "@types/eslint": "^4.16.6",
+    "@types/node": "^12.0.10",
     "babel-eslint": "^10.0.2",
     "chai": "^4.2.0",
     "eslint": "^6.0.1",
