@@ -14,7 +14,6 @@ class LoadConfig {
         let cwd = process.cwd();
         let cli = null;
         if (configFile) {
-            cwd = path_1.default.dirname(configFile);
             cli = new eslint_1.CLIEngine({
                 useEslintrc: false,
                 configFile,
@@ -23,6 +22,7 @@ class LoadConfig {
         }
         else {
             cli = new eslint_1.CLIEngine({
+                useEslintrc: false,
                 configFile: pack.main,
                 cwd
             });

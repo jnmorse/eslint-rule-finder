@@ -1,107 +1,107 @@
 #!/usr/bin/env node
 
 /* eslint-disable no-console */
-const program = require('commander')
-const fs = require('fs')
-const { version } = require('../package.json')
+const program = require('commander');
+const fs = require('fs');
+const { version } = require('../package.json');
 
 const {
   LoadConfig,
   findUnused,
   sortRules,
   saveCurrentRules
-} = require('../index')
+} = require('../index');
 
-const getCategory = require('../utils/get-category')
+const getCategory = require('../dist/get-category').default;
 
 // Set up Commander
-program.version(version)
-program.description('cli for getting eslint rules')
+program.version(version);
+program.description('cli for getting eslint rules');
 program.option(
   '-c, --current [file]',
   'get current rules, (include deprecated is default)'
-)
-program.option('-u, --unused [file]', 'get unused rules')
-program.option('-s, --save <file>', 'save output in markdown file')
-program.option('-i, --include', 'include deprecated rules')
-program.parse(process.argv)
+);
+program.option('-u, --unused [file]', 'get unused rules');
+program.option('-s, --save <file>', 'save output in markdown file');
+program.option('-i, --include', 'include deprecated rules');
+program.parse(process.argv);
 
-const { current, include, unused, save } = program
+const { current, include, unused, save } = program;
 
 // check options passed
 if (current) {
   const { currentRules, deprecated } = new LoadConfig(
     current !== true ? current : undefined
-  )
+  );
 
   if (save) {
-    saveCurrentRules(save, currentRules)
+    saveCurrentRules(save, currentRules);
   } else {
-    console.log('Current Rules\n')
+    console.log('Current Rules\n');
 
     try {
       currentRules.forEach((describe, rule) => {
         if (!deprecated.has(rule)) {
-          console.log(rule)
+          console.log(rule);
         }
-      })
+      });
 
       // add blank line
-      console.log('')
+      console.log('');
 
       deprecated.forEach((describe, rule) =>
         console.warn(`Warning: ${rule} has been deprecated`)
-      )
+      );
     } catch (error) {
-      console.error(`Error: ${error.message}`)
-      process.exit(10)
+      console.error(`Error: ${error.message}`);
+      process.exit(10);
     }
 
-    console.log('')
+    console.log('');
   }
 } else if (unused && save) {
-  const config = new LoadConfig(unused !== true ? unused : undefined)
-  const unusedRules = findUnused(config, program.include)
-  const sortedRules = sortRules(unusedRules)
+  const config = new LoadConfig(unused !== true ? unused : undefined);
+  const unusedRules = findUnused(config, program.include);
+  const sortedRules = sortRules(unusedRules);
 
-  let text = '## Unused Rules'
+  let text = '## Unused Rules';
 
-  let category = ''
+  let category = '';
 
   sortedRules.forEach((value, key) => {
-    const newCategory = getCategory([key, value])
+    const newCategory = getCategory([key, value]);
 
     if (category !== newCategory) {
-      category = newCategory
+      category = newCategory;
 
-      text += `\n\n${category}\n\n`
+      text += `\n\n${category}\n\n`;
     }
 
-    text += `- [ ] ${key}\n`
-  })
+    text += `- [ ] ${key}\n`;
+  });
 
-  fs.writeFileSync(save, text, { encoding: 'utf-8', flag: 'w' })
+  fs.writeFileSync(save, text, { encoding: 'utf-8', flag: 'w' });
 } else if (unused && !include) {
-  const config = new LoadConfig(unused !== true ? unused : undefined)
-  const unusedRules = findUnused(config, include)
+  const config = new LoadConfig(unused !== true ? unused : undefined);
+  const unusedRules = findUnused(config, include);
 
   if (unusedRules.size) {
     unusedRules.forEach((value, key) => {
-      let description = ''
+      let description = '';
 
       // eslint-plugin-import does not define a docs
       if (value.meta && value.meta.docs && value.meta.docs.description) {
-        description = value.meta.docs.description
+        description = value.meta.docs.description;
       }
 
-      console.error(`Not Defined: ${key}(${description})`)
-    })
+      console.error(`Not Defined: ${key}(${description})`);
+    });
 
-    console.error(`\n${unusedRules.size} rules not defined\n`)
-    process.exit(1)
+    console.error(`\n${unusedRules.size} rules not defined\n`);
+    process.exit(1);
   } else {
-    console.info('All rules are defined. Good Job!')
+    console.info('All rules are defined. Good Job!');
   }
 } else {
-  program.help()
+  program.help();
 }
