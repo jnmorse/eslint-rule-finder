@@ -4,7 +4,10 @@ import { Rule } from 'eslint';
 const isDeprecated = (rule: Rule.RuleModule) =>
   rule.meta && rule.meta.deprecated ? true : false;
 
-function findUnused(loadedConfig: LoadConfig, includeDeprecated: boolean) {
+function findUnused(
+  loadedConfig: LoadConfig,
+  includeDeprecated: boolean = false
+) {
   const { rules, currentRules } = loadedConfig;
 
   const unused: Map<string, Rule.RuleModule> = new Map();
