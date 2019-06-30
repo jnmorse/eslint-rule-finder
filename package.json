@@ -30,8 +30,7 @@
     "build": "tsc",
     "prerelease": "npm run --silent build && npm run --silent test",
     "release": "standard-version --sign",
-    "pretest": "npm run --silent build",
-    "test": "mocha"
+    "test": "jest"
   },
   "dependencies": {
     "commander": "^2.20.0",
@@ -39,16 +38,18 @@
   },
   "devDependencies": {
     "@types/eslint": "^4.16.6",
+    "@types/jest": "^24.0.15",
     "@types/lodash": "^4.14.135",
+    "@types/mock-fs": "^3.6.30",
     "@types/node": "^12.0.10",
     "babel-eslint": "^10.0.2",
-    "chai": "^4.2.0",
     "eslint": "^6.0.1",
     "eslint-config-jnmorse": "^2.5.0",
     "eslint-plugin-react": "^7.14.2",
-    "mocha": "^6.1.4",
+    "jest": "^24.8.0",
     "react": "^16.8.6",
     "standard-version": "^6.0.1",
+    "ts-jest": "^24.0.2",
     "typescript": "^3.5.2"
   },
   "peerDependencies": {

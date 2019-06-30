@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`saveCurrentRules() should save rules 1`] = `
+"# Current Rules
+
+Currently Defined Rules
+
+
+## semi
+
+\`\`\`json
+{
+  \\"semi\\": [\\"error\\",\\"never\\"]
+}
+\`\`\`
+    
+## curly
+
+\`\`\`json
+{
+  \\"curly\\": [\\"error\\"]
+}
+\`\`\`
+    
+## valid-jsdoc
+
+\`\`\`json
+{
+  \\"valid-jsdoc\\": [\\"off\\"]
+}
+\`\`\`
+    "
+`;
