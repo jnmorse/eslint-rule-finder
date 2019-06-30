@@ -13,7 +13,7 @@ class LoadConfig {
   public rules: Map<string, Rule.RuleModule> = new Map();
   public currentRules: Map<string, CurrentRuleDefintion> = new Map();
 
-  constructor(configFile: string) {
+  constructor(configFile?: string) {
     let cwd = process.cwd();
     let cli = null;
 
