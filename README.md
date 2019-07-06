@@ -14,18 +14,19 @@ Package to help eslint config maintainers keep there rules up to date.
 npm i -D eslint-rule-finder
 ```
 
-## Usage
+## CLI Usage
 
-Check for unused rules and error if found
+Check for undefined rules in your config
 
 ```sh
-eslint-rule-finder --unused .eslint.rc
+rule-finder undefined .eslint.rc
 ```
 
-Save Unused Rules to a markdown file as a list
+## Global CLI Options
 
 ```sh
-eslint-rule-finder --unused .eslint.rc --save UNUSED.md
+rule-finder -i, --include # Include Deprecated rules
+rule-finder -n, --no-errors # no emit errors
 ```
 
 ## Use in Test Frameworks
@@ -35,53 +36,52 @@ Below is some examples of how to use this with testing frameworks
 ### Mocha & Chai
 
 ```javascript
-const { LoadConfig, findUnused } = require('eslint-rule-finder')
-const { assert } = require('chai')
+const { RuleFinder } = require('eslint-rule-finder');
+const { assert } = require('chai');
 
-let config
+let ruleFinder;
 
 describe('Rules', () => {
   before(() => {
-    config = new LoadConfig()
-  })
+    ruleFinder = new RuleFinder();
+  });
 
   it('should have 0 undefined rules', () => {
-    const unusedRules = findUnused(config)
+    const undefined = ruleFinder.getUndefinedRules();
 
-    assert.equal(unusedRules.size, 0)
-  })
+    assert.equal(undfined.size, 0);
+  });
 
   it('should have 0 deprecated rules', () => {
-    const { deprecated } = config
+    const { deprecated } = ruleFinder;
 
-    assert.equal(deprecated.size, 0)
-  })
-})
+    assert.equal(deprecated.size, 0);
+  });
+});
 ```
 
 ### Jest Example
 
 ```javascript
-const { LoadConfig, findUnused } = require('eslint-rule-finder')
+const { RuleFinder } = require('eslint-rule-finder');
 
-let config
+let ruleFinder;
 
 describe('Rules', () => {
   beforeAll(() => {
-    config = new LoadConfig()
-  })
+    ruleFinder = new RuleFinder();
+  });
 
   it('should have 0 undefined rules', () => {
-    const unused = findUnused(config)
+    const undefined = ruleFinder.getUndefinedRules();
 
-    expect(unused.size).toBe(0)
-  })
+    expect(undefined.size).toBe(0);
+  });
 
   it('should have 0 deprecated rules', () => {
-    const { deprecated } = config
+    const { deprecated } = ruleFinder;
 
-    expect(deprecated).toEqual(new Map())
-  })
-})
-
+    expect(deprecated).toEqual(new Map());
+  });
+});
 ```
