@@ -9,9 +9,10 @@ export interface CurrentRuleDefintion {
 }
 
 export class RuleFinder extends CLIEngine {
-  public currentRules: Map<string, CurrentRuleDefintion> = new Map();
   public readonly version: string = require(`${__dirname}/../package.json`)
     .version;
+
+  public currentRules: Map<string, CurrentRuleDefintion> = new Map();
 
   constructor(configFile?: string) {
     super({
@@ -71,6 +72,32 @@ export class RuleFinder extends CLIEngine {
           !this.isDeprecated(rule)
       )
     );
+  }
+
+  /**
+   * Return all rules not contained the configuration
+   *
+   * @param {boolean} includeDeprecated include deprecated rules?
+   * @returns {Map<string, Rule.RuleModule>} Map containg undefined rules
+   */
+  public getUndefinedRules(
+    includeDeprecated: boolean = false
+  ): Map<string, Rule.RuleModule> {
+    const rules = this.getRules();
+    const undefinedRules = new Map<string, Rule.RuleModule>();
+
+    rules.forEach((rule, name) => {
+      if (
+        !this.currentRules.has(name) &&
+        this.isDeprecated(rule) === includeDeprecated
+      ) {
+        undefinedRules.set(name, rule);
+      } else if (!this.currentRules.has(name) && !this.isDeprecated(rule)) {
+        undefinedRules.set(name, rule);
+      }
+    });
+
+    return undefinedRules;
   }
 
   /**
