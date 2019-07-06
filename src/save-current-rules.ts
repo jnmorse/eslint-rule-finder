@@ -1,4 +1,4 @@
-import { CurrentRuleDefintion } from './load-config';
+import { CurrentRuleDefintion } from './rule-finder';
 
 const path = require('path');
 const fs = require('fs');

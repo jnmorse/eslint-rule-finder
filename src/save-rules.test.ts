@@ -1,17 +1,17 @@
 import { resolve } from 'path';
 import fs from 'fs';
 
-import LoadConfig from './load-config';
+import { RuleFinder } from './rule-finder';
 import saveCurrentRules from './save-current-rules';
 
 const configFile = resolve(__dirname, './test-fixutes/withoutPlugins.js');
 const fileName = 'test.md';
 
 describe('saveCurrentRules()', () => {
-  let loadConfig: LoadConfig;
+  let loadConfig: RuleFinder;
 
   beforeEach(() => {
-    loadConfig = new LoadConfig(configFile);
+    loadConfig = new RuleFinder(configFile);
   });
 
   afterEach(() => {
