@@ -37,6 +37,14 @@ export class RuleFinder extends CLIEngine {
     }
   }
 
+  private isDeprecated(rule: Rule.RuleModule): boolean {
+    if (rule.meta && rule.meta.deprecated) {
+      return true;
+    }
+
+    return false;
+  }
+
   get deprecated(): Map<string, CurrentRuleDefintion> {
     const deprecatedRules: Map<string, CurrentRuleDefintion> = new Map();
 
