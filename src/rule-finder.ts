@@ -9,7 +9,7 @@ export interface CurrentRuleDefintion {
   definition: Rule.RuleModule;
 }
 
-class LoadConfig {
+export class RuleFinder {
   public rules: Map<string, Rule.RuleModule> = new Map();
   public currentRules: Map<string, CurrentRuleDefintion> = new Map();
 
@@ -67,5 +67,3 @@ class LoadConfig {
     return deprecatedRules;
   }
 }
-
-export default LoadConfig;
