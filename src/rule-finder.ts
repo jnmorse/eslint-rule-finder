@@ -37,6 +37,12 @@ export class RuleFinder extends CLIEngine {
     }
   }
 
+  /**
+   * Checks if a rule is deprecated or not
+   *
+   * @param {Rule.RuleModule} rule Rule to check if deprecated
+   * @returns {boolean} true if deprecated
+   */
   private isDeprecated(rule: Rule.RuleModule): boolean {
     if (rule.meta && rule.meta.deprecated) {
       return true;
@@ -45,6 +51,10 @@ export class RuleFinder extends CLIEngine {
     return false;
   }
 
+  /**
+   * All Rules that have been deprecated
+   * @readonly
+   */
   get deprecated(): Map<string, CurrentRuleDefintion> {
     const deprecatedRules: Map<string, CurrentRuleDefintion> = new Map();
 
