@@ -19,7 +19,7 @@
   "author": "Joseph Morse <tamed.lionheart@gmail.com>",
   "main": "dist/index.js",
   "bin": {
-    "eslint-rule-finder": "bin/find-rules"
+    "rule-finder": "dist/bin/rule-finder-cli.js"
   },
   "directories": {
     "test": "test"
