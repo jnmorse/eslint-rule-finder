@@ -28,6 +28,7 @@
     "lint": "eslint .",
     "prebuild": "rm -r dist",
     "build": "tsc",
+    "postbuild": "chmod +x dist/bin/rule-finder-cli.js",
     "prerelease": "npm run --silent build && npm run --silent test",
     "release": "standard-version --sign",
     "test": "jest"
