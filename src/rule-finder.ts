@@ -9,7 +9,7 @@ export interface CurrentRuleDefintion {
 }
 
 export class RuleFinder extends CLIEngine {
-  public readonly version: string = require(`${__dirname}/../package.json`)
+  public static readonly version: string = require(`${__dirname}/../package.json`)
     .version;
 
   public currentRules: Map<string, CurrentRuleDefintion> = new Map();
