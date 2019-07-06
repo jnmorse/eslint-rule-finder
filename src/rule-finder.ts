@@ -2,53 +2,36 @@ import { CLIEngine, Rule, Linter } from 'eslint';
 import path from 'path';
 
 const pack = require(`${path.join(process.cwd(), 'package.json')}`);
-import sortRules from './sort-rules';
 
 export interface CurrentRuleDefintion {
   config: Linter.RuleLevel | Linter.RuleLevelAndOptions;
   definition: Rule.RuleModule;
 }
 
-export class RuleFinder {
-  public rules: Map<string, Rule.RuleModule> = new Map();
+export class RuleFinder extends CLIEngine {
   public currentRules: Map<string, CurrentRuleDefintion> = new Map();
 
   constructor(configFile?: string) {
-    let cwd = process.cwd();
-    let cli = null;
+    super({
+      useEslintrc: false,
+      configFile: configFile || pack.main,
+      cwd: process.cwd()
+    });
 
-    if (configFile) {
-      cli = new CLIEngine({
-        useEslintrc: false,
-        configFile,
-        cwd
-      });
-    } else {
-      cli = new CLIEngine({
-        useEslintrc: false,
-        configFile: pack.main,
-        cwd
-      });
-    }
+    const rules = this.getRules();
+    const { rules: configRules } = this.getConfigForFile(
+      configFile || pack.main
+    );
 
-    this.rules = sortRules(cli.getRules());
-
-    const { rules } = cli.getConfigForFile(configFile || pack.main);
-
-    this.currentRules = new Map();
-
-    if (rules) {
-      Object.keys(rules).forEach(rule => {
-        const definition = this.rules.get(rule);
+    if (configRules) {
+      Object.keys(configRules).forEach(rule => {
+        const definition = rules.get(rule);
 
         if (definition) {
           this.currentRules.set(rule, {
-            config: rules[rule],
+            config: configRules[rule],
             definition
           });
-        } else {
-          // eslint-disable-next-line no-console
-          throw new Error(`definition for ${rule} does not exist`);
         }
       });
     }
