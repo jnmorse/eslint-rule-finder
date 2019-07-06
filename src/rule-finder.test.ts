@@ -1,30 +1,32 @@
-import LoadConfig from './load-config';
+import { RuleFinder } from './rule-finder';
 import { resolve } from 'path';
 
-describe('LoadConfig', () => {
-  test('LoadConfig without plugins, should have all the base rules', () => {
-    const loadConfig = new LoadConfig(
+describe('RuleFinder', () => {
+  test('RuleFinder without plugins, should have all the base rules', () => {
+    const ruleFinder = new RuleFinder(
       resolve(__dirname, './test-fixutes/withoutPlugins.js')
     );
 
-    expect(loadConfig.rules.size).toBeGreaterThanOrEqual(200);
+    expect(ruleFinder.getRules().size).toBeGreaterThanOrEqual(200);
   });
 
-  test('LoadConfig with a config including plugins, has more rules', () => {
-    const withPlugins = new LoadConfig(
+  test('RuleFinder with a config including plugins, has more rules', () => {
+    const withPlugins = new RuleFinder(
       resolve(__dirname, './test-fixutes/withPlugin.js')
     );
 
-    const withoutPlugins = new LoadConfig(
+    const withoutPlugins = new RuleFinder(
       resolve(__dirname, './test-fixutes/withoutPlugins.js')
     );
 
-    expect(withPlugins.rules.size).toBeGreaterThan(withoutPlugins.rules.size);
+    expect(withPlugins.getRules().size).toBeGreaterThan(
+      withoutPlugins.getRules().size
+    );
   });
 
   test('#currentRules should only contained the defined rules', () => {
     const currentConfig = require('./test-fixutes/withoutPlugins');
-    const { currentRules } = new LoadConfig(
+    const { currentRules } = new RuleFinder(
       resolve(__dirname, './test-fixutes/withoutPlugins.js')
     );
 
@@ -35,7 +37,7 @@ describe('LoadConfig', () => {
   });
 
   test('#deprecated should contain of list of any deprecated rules', () => {
-    const { deprecated } = new LoadConfig(
+    const { deprecated } = new RuleFinder(
       resolve(__dirname, './test-fixutes/withoutPlugins.js')
     );
 
