@@ -10,6 +10,8 @@ export interface CurrentRuleDefintion {
 
 export class RuleFinder extends CLIEngine {
   public currentRules: Map<string, CurrentRuleDefintion> = new Map();
+  public readonly version: string = require(`${__dirname}/../package.json`)
+    .version;
 
   constructor(configFile?: string) {
     super({
@@ -49,6 +51,26 @@ export class RuleFinder extends CLIEngine {
     }
 
     return false;
+  }
+
+  /**
+   * Return all the rules from ESLint and plugins
+   *
+   * @param {boolean} includeDeprecated include deprecated rules?
+   * @returns {Map<string, Rule.RuleModule>} Map containing the rules
+   */
+  public getRules(
+    includeDeprecated: boolean = true
+  ): Map<string, Rule.RuleModule> {
+    const rules = super.getRules();
+
+    return new Map(
+      Array.from(rules).filter(
+        ([name, rule]) =>
+          includeDeprecated === this.isDeprecated(rule) ||
+          !this.isDeprecated(rule)
+      )
+    );
   }
 
   /**
