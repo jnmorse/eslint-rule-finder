@@ -35,21 +35,22 @@
   },
   "dependencies": {
     "commander": "^2.20.0",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
+    "@types/babel__core": "^7.1.2",
     "@types/eslint": "^4.16.6",
-    "@types/lodash": "^4.14.135",
-    "@types/node": "^12.0.10",
+    "@types/lodash": "^4.14.136",
+    "@types/node": "^12.6.8",
     "babel-eslint": "^10.0.2",
     "chai": "^4.2.0",
     "eslint": "^6.0.1",
     "eslint-config-jnmorse": "^2.5.0",
     "eslint-plugin-react": "^7.14.2",
-    "mocha": "^6.1.4",
+    "mocha": "^6.2.0",
     "react": "^16.8.6",
     "standard-version": "^6.0.1",
-    "typescript": "^3.5.2"
+    "typescript": "^3.5.3"
   },
   "peerDependencies": {
     "eslint": ">= 6.0.1"
