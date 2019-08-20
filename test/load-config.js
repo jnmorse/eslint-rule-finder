@@ -17,7 +17,7 @@ describe('Load Config', () => {
   it('should have all the rules', () => {
     const { rules } = config;
 
-    assert.equal(rules.size, 266);
+    assert.equal(rules.size, 267);
   });
 
   it('should have only currentRules', () => {
