@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.2",
-    "@types/eslint": "^4.16.8",
+    "@types/eslint": "^6.1.0",
     "@types/lodash": "^4.14.136",
     "@types/node": "^12.7.2",
     "babel-eslint": "^10.0.2",
