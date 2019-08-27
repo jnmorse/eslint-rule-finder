@@ -1,6 +1,6 @@
 import { Rule, Linter } from 'eslint';
 export interface CurrentRuleDefintion {
-    config: Linter.RuleLevel | Linter.RuleLevelAndOptions;
+    config?: Linter.RuleEntry;
     definition: Rule.RuleModule;
 }
 declare class LoadConfig {

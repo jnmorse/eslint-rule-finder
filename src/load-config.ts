@@ -5,7 +5,7 @@ const pack = require(`${path.join(process.cwd(), 'package.json')}`);
 import sortRules from './sort-rules';
 
 export interface CurrentRuleDefintion {
-  config: Linter.RuleLevel | Linter.RuleLevelAndOptions;
+  config?: Linter.RuleEntry;
   definition: Rule.RuleModule;
 }
 
