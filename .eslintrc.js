@@ -3,6 +3,7 @@ module.exports = {
   env: {
     mocha: true
   },
+  parser: 'babel-eslint',
   parserOptions: {
     ecmaVersion: 9
   },

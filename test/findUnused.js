@@ -13,11 +13,11 @@ describe('loadConfig', () => {
 
   it('finds unused rules', () => {
     const unusedRules = findUnused(config);
-    assert.equal(unusedRules.size, 254);
+    assert.equal(unusedRules.size, 257);
   });
 
   it('finds unused rules that are deprecated', () => {
     const unusedRules = findUnused(config, true);
-    assert.equal(unusedRules.size, 264);
+    assert.equal(unusedRules.size, 267);
   });
 });
