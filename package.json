@@ -34,7 +34,7 @@
     "test": "mocha"
   },
   "dependencies": {
-    "commander": "^3.0.2",
+    "commander": "^4.1.1",
     "lodash": "^4.17.15"
   },
   "devDependencies": {
